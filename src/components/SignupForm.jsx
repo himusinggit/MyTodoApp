@@ -23,7 +23,7 @@ function SignupForm() {
                 navigate('/');
             }
             else{
-                alert("this account already exists")
+                alert("this account already exists or wrong credentials")
                 setEmail("");
                 setPassword("");
                 setName("");
