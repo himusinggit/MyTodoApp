@@ -15,12 +15,25 @@ function SignupForm() {
         e.preventDefault();
         try{
         authService.signup({name,email,password}).then(user=>{
-            dispatch(login(user));
-            navigate('/');
+            if(user){
+                dispatch(login(user));
+                setEmail("");
+                setPassword("");
+                setName("");
+                navigate('/');
+            }
+            else{
+                alert("this account already exists")
+                setEmail("");
+                setPassword("");
+                setName("");
+            }
+        }).catch(error=>{
+            throw error;
         })
     }
     catch(error){
-        throw error
+        alert("this account already exist")
     }
         
     }

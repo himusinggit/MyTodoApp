@@ -16,15 +16,23 @@ function LoginForm() {
             try {
                 authService.login({email,password}).then(users=>{
                 authService.getUser().then(user=>{
+                    if(user){
                     dispatch(login(user));
-                    if(user) navigate('/')
+                    setEmail("");
+                    setPassword("");
+                    navigate('/')
+                    }
+                    else{
+                        alert("user not found check your email password carefully")
+                    }
+                        setEmail("");
+                        setPassword("");
                 })
             })
 
             } catch (error) {
                 throw error
             }
-
             
         }
     return (

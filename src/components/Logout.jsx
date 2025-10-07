@@ -10,6 +10,7 @@ function Logout() {
     const handleLogout=()=>{
         authService.logout().then(res=>{
             dispatch(logout())
+            localStorage.removeItem("todos");
             navigate("/guest")
         });
     }

@@ -3,6 +3,7 @@ import dataService from '../appwrite/config'
 function Todo({todo,todoId,...props}) {
     const [isDeleted, setIsDeleted] = useState(false);
     const deleteTodo=()=>{
+        localStorage.setItem("todos",JSON.stringify(JSON.parse(localStorage.getItem("todos")).filter((res)=>res.$id!==todoId)));
         dataService.deleteRow(todoId);
         setIsDeleted(true);
     }

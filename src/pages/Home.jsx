@@ -13,18 +13,28 @@ function Home() {
   const [userTodos, setuserTodos] = useState([]);
   useEffect(() => {
       console.log(userData.$id);
-      if(userData){
-      dataService.listRows(userData.$id).then((todos)=>{
-      console.log("yahan tak pahunch raha hai ",todos);
-      if(todos.rows.length>0){
-        setuserTodos(todos.rows);
-        console.log("yo yo yo");
+      if(!localStorage.getItem("todos")){
+      localStorage.setItem("todos",JSON.stringify([]));
       }
-    })
+      if(userData){
+        if(JSON.parse(localStorage.getItem("todos")).length>0){
+          setuserTodos(JSON.parse(localStorage.getItem("todos")));
+        }
+        else{
+          dataService.listRows(userData.$id).then((todos)=>{
+            console.log("yahan tak pahunch raha hai ",todos);
+            if(todos.rows.length>0){
+              setuserTodos(todos.rows);
+              localStorage.setItem("todos",JSON.stringify(todos.rows.map((res)=>({todo:res.todo,$id:res.$id}))));
+            }
+          })
+        }
   }
   },[location])
   const handleAdd=()=>{
-    setuserTodos([...userTodos,{todo:task,$id:Date.now()}]);
+    const myId=Date.now();
+    setuserTodos([...userTodos,{todo:task,$id:myId}]);
+    localStorage.setItem("todos",JSON.stringify([...JSON.parse(localStorage.getItem("todos")),{$id:myId,todo:task}]));
     dataService.addRow({todo:task,userId:userData.$id});
     
   }
@@ -39,7 +49,7 @@ function Home() {
             </div>
         </div>
         <div className="alltodos">
-            {userTodos.map((res)=>(<Todo key={res.$id} todo={res.todo} todoId={res.$id}/>))}
+            {userTodos.length>0?userTodos.map((res)=>(<Todo key={res.$id} todo={res.todo} todoId={res.$id}/>)):<h1 className='text-xl text-white'>loading...</h1>}
         </div>
       </div>
     </div>
