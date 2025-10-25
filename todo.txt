@@ -1,2 +1,2 @@
-use react hook forms in it
 make sure after login no user can visit guest page
+create save button as if you are adding or deleting fastly the change is not occuring in database

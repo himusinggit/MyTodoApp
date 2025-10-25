@@ -13,13 +13,16 @@
 }
 .main{
     width: 100%;
-    padding: 0rem 1rem;;
+    padding: 0rem 1rem;
+    max-width: 800px;
+    position: relative;
 }
 .head{
     width: 100%;
     /* background-color: red; */
     display: flex;
     flex-direction: column;
+    position: sticky;
     align-items: center;
     gap: 1rem;
 }

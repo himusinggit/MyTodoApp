@@ -1,12 +1,20 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {Button} from '../components/index'
+import authService from '../appwrite/auth'
 function Guest() {
+    const curUser=authService.getUser();
+    const navigate=useNavigate();
+    const location=useLocation();
+    useEffect(()=>{
+        if(curUser){
+            navigate("/");
+        }
+    },[location.pathname]);
         const navItems=[
         {name:"Login",slug:"/login",active:false},
         {name:"Signup",slug:"/signup",active:false},
     ]
-    const navigate=useNavigate();
     return (
         <div className="container">
             <h1 className='text-3xl text-white'>My Todo App</h1>
